@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./Components/Header";
+import Formulario from "./Components/Formulario";
+import ListadoPacientes from "./Components/ListadoPacientes";
+import {useState} from "react"
 
 function App() {
+
+  const [pacientes, setPacientes] = useState([])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container mx-auto mt-20"> 
+        <Header 
+        />
+      <div className="md:flex mt-12">
+        <Formulario 
+        pacientes={pacientes}
+        setPacientes={setPacientes}
+        />
+        <ListadoPacientes 
+        pacientes={pacientes}
+        />
+      </div>
+     
     </div>
   );
 }
