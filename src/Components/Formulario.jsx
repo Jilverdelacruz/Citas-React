@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Error from "../Error"
-const Formulario = ({pacientes, setPacientes}) =>{
-
+const Formulario = ({pacientes, setPacientes, paciente}) =>{
+   
     const [nombre, setNombre] = useState('')
     const [propietario, setPropietario] = useState('')
     const [email, setEmail] = useState('')
@@ -9,6 +9,7 @@ const Formulario = ({pacientes, setPacientes}) =>{
     const [sintomas, setSintomas] = useState('')
     const [error, setError] = useState(false)
 
+    console.log(paciente)
     const generateId = () =>{
         const random = Math.random().toString(36).substr(2);
         const fecha = Date.now().toString(36)
@@ -48,6 +49,14 @@ const Formulario = ({pacientes, setPacientes}) =>{
         setSintomas('')
     }
     
+    /* useEffect(() =>{
+        console.log(paciente)  // si la la consola estuviera fuera del UseEffect se ejecutaría cada vez que se digite en que cada campo del formulario, pero como ahora está en el useEffect, solo se ejecutará cuando cambie el usestate "paciente" es decir de vaciío empieza a tener el primer contenido y recien se ejecuta la consola, se renderiza una sola vez
+    }, [paciente]) */
+
+    /*   useEffect(() =>{
+        console.log(paciente)  
+    }, [])  si no se coloca entre llaves solo se ejecutará la primera vez una vez que culmine el componenete*/
+
     return (
         <div className="md:w-1/2 lg:w-2/5">
             <h2 className="font-black text-3xl text-center">Seguimiento de Pacientes</h2>
