@@ -9,7 +9,7 @@ const Formulario = ({pacientes, setPacientes, paciente}) =>{
     const [sintomas, setSintomas] = useState('')
     const [error, setError] = useState(false)
 
-    console.log(paciente)
+    
     const generateId = () =>{
         const random = Math.random().toString(36).substr(2);
         const fecha = Date.now().toString(36)
@@ -49,13 +49,21 @@ const Formulario = ({pacientes, setPacientes, paciente}) =>{
         setSintomas('')
     }
     
-    /* useEffect(() =>{
-        console.log(paciente)  // si la la consola estuviera fuera del UseEffect se ejecutaría cada vez que se digite en que cada campo del formulario, pero como ahora está en el useEffect, solo se ejecutará cuando cambie el usestate "paciente" es decir de vaciío empieza a tener el primer contenido y recien se ejecuta la consola, se renderiza una sola vez
-    }, [paciente]) */
+     useEffect(() =>{
+        if(Object.keys(paciente).length > 0){
+            setNombre(paciente.nombre)
+            setPropietario(paciente.propietario)
+            setEmail(paciente.email)
+            setFecha(paciente.fecha)
+            setSintomas(paciente.sintomas)
+        } // indica que el Object.key si no tiene nada te bota un array y ya tendríamos acceso al método length para ver si tiene contenido
+
+         // si la la consola estuviera fuera del UseEffect se ejecutaría cada vez que se digite en que cada campo del formulario, pero como ahora está en el useEffect, solo se ejecutará cuando cambie el usestate "paciente" es decir de vaciío empieza a tener el primer contenido y recien se ejecuta la consola, se renderiza una sola vez
+    }, [paciente])
 
     /*   useEffect(() =>{
         console.log(paciente)  
-    }, [])  si no se coloca entre llaves solo se ejecutará la primera vez una vez que culmine el componenete*/
+    }, [])  si no se coloca nada entre llaves solo se ejecutará la primera vez una vez que el componente se encuentre listo, por ejemplo si creamos este mismo useEffect en componente clientes, la consola se ejecutará reciendo cuando agregues un paciente, porque ahí es donde recien aparece el componente de pacientes*/
 
     return (
         <div className="md:w-1/2 lg:w-2/5">
@@ -133,7 +141,7 @@ const Formulario = ({pacientes, setPacientes, paciente}) =>{
                 <input 
                 type="submit"
                 className="bg-indigo-600 w-full py-2 text-white uppercase font-bold hover:bg-indigo-700 transition-colors cursor-pointer"
-                value="AGREGAR PENDIENTE"
+                value={paciente.id ? 'EDITAR PACIENTE' : 'AGREGAR PACIENTE'}
                 />
                 
             </form>
