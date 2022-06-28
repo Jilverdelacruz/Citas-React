@@ -8,7 +8,7 @@ const Formulario = ({pacientes, setPacientes, paciente}) =>{
     const [fecha, setFecha] = useState('')
     const [sintomas, setSintomas] = useState('')
     const [error, setError] = useState(false)
-
+    
     
     const generateId = () =>{
         const random = Math.random().toString(36).substr(2);
@@ -28,18 +28,30 @@ const Formulario = ({pacientes, setPacientes, paciente}) =>{
         }
 
         // primero guardar la data a un objeto
-        const paciente = {
+        const obPaciente = {
             nombre,
             propietario,
             email,
             fecha,
             sintomas,
-            error,
-            id: generateId()
+            
         }
         
-        // Agregar al arreglo y tomar en cuenta el Spread Operator porque se irá acumulando todo dentro del arreglo
-        setPacientes([...pacientes, paciente])
+        // En caso de querer editar 
+        if(paciente.id){
+         /*  console.log(paciente)  // mi objeto paciente si tiene el id
+           console.log(obPaciente) // el objeto al querer guardar lo editado no tendrá el id porque no lo tiene en este objeto*/
+          obPaciente.id = paciente.id 
+           console.log(obPaciente) // el objeto ya tiene un id
+           console.log(paciente)
+           const pacienteActualizado = pacientes.map(pacienteState=> pacienteState.id === paciente.id ? obPaciente : pacienteState )
+            setPacientes(pacienteActualizado)
+        }else{
+            obPaciente.id = generateId()  // el id solo se agrfegar cuando agregas un paciente mas no cuando edites
+            // Agregar al arreglo y tomar en cuenta el Spread Operator porque se irá acumulando todo dentro del arreglo
+            setPacientes([...pacientes, obPaciente])
+        }
+        
         
         // borrar la data una vez agregado
         setNombre('')
@@ -48,7 +60,7 @@ const Formulario = ({pacientes, setPacientes, paciente}) =>{
         setFecha('')
         setSintomas('')
     }
-    
+    // Antwa dar editar se colocan la data en el formulario
      useEffect(() =>{
         if(Object.keys(paciente).length > 0){
             setNombre(paciente.nombre)
@@ -56,6 +68,7 @@ const Formulario = ({pacientes, setPacientes, paciente}) =>{
             setEmail(paciente.email)
             setFecha(paciente.fecha)
             setSintomas(paciente.sintomas)
+            
         } // indica que el Object.key si no tiene nada te bota un array y ya tendríamos acceso al método length para ver si tiene contenido
 
          // si la la consola estuviera fuera del UseEffect se ejecutaría cada vez que se digite en que cada campo del formulario, pero como ahora está en el useEffect, solo se ejecutará cuando cambie el usestate "paciente" es decir de vaciío empieza a tener el primer contenido y recien se ejecuta la consola, se renderiza una sola vez
