@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import Error from "../Error"
-const Formulario = ({pacientes, setPacientes, paciente}) =>{
+const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) =>{
    
     const [nombre, setNombre] = useState('')
     const [propietario, setPropietario] = useState('')
@@ -42,10 +42,12 @@ const Formulario = ({pacientes, setPacientes, paciente}) =>{
          /*  console.log(paciente)  // mi objeto paciente si tiene el id
            console.log(obPaciente) // el objeto al querer guardar lo editado no tendrá el id porque no lo tiene en este objeto*/
           obPaciente.id = paciente.id 
-           console.log(obPaciente) // el objeto ya tiene un id
-           console.log(paciente)
-           const pacienteActualizado = pacientes.map(pacienteState=> pacienteState.id === paciente.id ? obPaciente : pacienteState )
+           console.log(obPaciente) // el objeto ya tiene un id - Mi objeto ya tiene la data actualizada al editar
+           console.log(paciente) // mi state tiene de la mascota que se agregó al darle click en editar  pero no la que se acaba de actualizar 
+           const pacienteActualizado = pacientes.map(pacienteState=> pacienteState.id === paciente.id ? obPaciente : pacienteState ) // UN CLARO EJEMPLO ES QUE TENEMOS 2 PACIENTES AGREGADOS (PEXOXO, DRAKE, PELUCHIN), LUEGO LE DOY A EDITAR A PEXOXO, Y LO CAMBIO POR VALICHA, CUANDO ME SALGA LA NUEVA LISTA DE MI ARREGLO OBPACIENTE (REPRESANTARÁ AL UNICO PACIENTE QUE EDITE QUE SERÍA EN VEZ DE PEXOXO VALICHA) MIENTRAS QUE (DRAKE Y PELUCHIN) REPRESENTAN AL RETORNO DE PACIENTESTATE PORQUE NO SON IGUALES AL ID QUE QUIERO EDITAR.
             setPacientes(pacienteActualizado)
+            setPaciente({}) //  lo ideal es siempre limpiar el state para que no se almacene tanto en memoria
+
         }else{
             obPaciente.id = generateId()  // el id solo se agrfegar cuando agregas un paciente mas no cuando edites
             // Agregar al arreglo y tomar en cuenta el Spread Operator porque se irá acumulando todo dentro del arreglo
@@ -60,7 +62,7 @@ const Formulario = ({pacientes, setPacientes, paciente}) =>{
         setFecha('')
         setSintomas('')
     }
-    // Antwa dar editar se colocan la data en el formulario
+    // Cuando le da click a editar los primero es que el paciente editado se muestre en el formulario
      useEffect(() =>{
         if(Object.keys(paciente).length > 0){
             setNombre(paciente.nombre)
