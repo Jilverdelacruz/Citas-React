@@ -54,7 +54,6 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) =>{
             setPacientes([...pacientes, obPaciente])
         }
         
-        
         // borrar la data una vez agregado
         setNombre('')
         setPropietario('')
