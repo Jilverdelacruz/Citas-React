@@ -22,7 +22,7 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) =>{
         //validacion
         if([nombre, propietario, email, fecha, sintomas].includes('')){
             setError(true)
-            return // cn el return te permite romper el ciclo y ya no se ejecuta nada más una vez ejecutado este
+            return // el return indica que si ese error luego lo pones a false se cambiara sin problema sino estuviera cuando se quiera cambiar al false sin actualizar la página se quedará pegado el true
         }else{
             setError(false)
         }
