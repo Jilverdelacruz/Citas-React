@@ -34,7 +34,6 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) =>{
             email,
             fecha,
             sintomas,
-            
         }
         
         // En caso de querer editar 
@@ -47,7 +46,7 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) =>{
            const pacienteActualizado = pacientes.map(pacienteState=> pacienteState.id === paciente.id ? obPaciente : pacienteState ) // UN CLARO EJEMPLO ES QUE TENEMOS 2 PACIENTES AGREGADOS (PEXOXO, DRAKE, PELUCHIN), LUEGO LE DOY A EDITAR A PEXOXO, Y LO CAMBIO POR VALICHA, CUANDO ME SALGA LA NUEVA LISTA DE MI ARREGLO OBPACIENTE (REPRESANTARÁ AL UNICO PACIENTE QUE EDITE QUE SERÍA EN VEZ DE PEXOXO VALICHA) MIENTRAS QUE (DRAKE Y PELUCHIN) REPRESENTAN AL RETORNO DE PACIENTESTATE PORQUE NO SON IGUALES AL ID QUE QUIERO EDITAR.
             setPacientes(pacienteActualizado)
             setPaciente({}) //  lo ideal es siempre limpiar el state para que no se almacene tanto en memoria
-        
+
         }else{
             obPaciente.id = generateId()  // el id solo se agrfegar cuando agregas un paciente mas no cuando edites
             // Agregar al arreglo y tomar en cuenta el Spread Operator porque se irá acumulando todo dentro del arreglo
